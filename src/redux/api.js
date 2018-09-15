@@ -8,3 +8,9 @@ export const fetchExpenses = async () => await axios.get(`${baseUrl}/expenses`, 
   }
 })
 
+export const addCommentToExpense = async (id, comment) =>
+  await axios(`${baseUrl}/expenses/${id}`, {
+    method: 'POST',
+    data: { comment }
+})
+
