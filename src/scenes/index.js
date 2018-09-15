@@ -1,0 +1,1 @@
+export { default as ExpensesIndex } from './ExpensesIndex/ExpensesIndex'

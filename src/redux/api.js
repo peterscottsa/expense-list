@@ -1,5 +1,10 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3000'
 
-export const fetchExpenses = async () =>  await axios.get(`${baseUrl}/expenses`)
+export const fetchExpenses = async () => await axios.get(`${baseUrl}/expenses`, {
+  params: {
+    limit: 500, // Remove this later
+    offset: 0
+  }
+})
 
