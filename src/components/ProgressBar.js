@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {colors} from '../common'
+import { colors } from 'common'
 
 const Wrapper = styled.div`
   position: relative;
