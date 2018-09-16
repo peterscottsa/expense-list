@@ -26,7 +26,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetch: () => dispatch(expensesModule.fetch()),
-  addComment: (id, comment) => dispatch(expensesModule.addComment(id, comment))
+  addComment: (id, comment) => dispatch(expensesModule.addComment(id, comment)),
+  addReceipt: (id, receipt) => dispatch(expensesModule.addReceipt(id, receipt))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses)
