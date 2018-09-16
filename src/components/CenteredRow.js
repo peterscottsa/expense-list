@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const CenteredRow = styled.section`
-  width: 900px;
+  width: 90%;
   margin: 0 auto;
 `
 

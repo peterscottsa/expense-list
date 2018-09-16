@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { expensesModule } from '../redux/modules'
+import { computedExpenses } from '../redux/selectors/expenses'
 
 
 class Expenses extends Component {
@@ -19,8 +20,8 @@ Expenses.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  expensesById: state.expenses.expensesById,
-  allIds: state.expenses.allIds,
+  expenses: computedExpenses(state),
+  isLoading: state.expenses.utils.isLoading
 })
 
 const mapDispatchToProps = dispatch => ({
