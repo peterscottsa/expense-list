@@ -21,7 +21,8 @@ Expenses.defaultProps = {
 
 const mapStateToProps = state => ({
   expenses: computedExpenses(state),
-  isLoading: state.expenses.utils.isLoading
+  isLoading: state.expenses.utils.isLoading,
+  uploadProgress: state.expenses.utils.progress
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -6,9 +6,9 @@ export const FETCH = 'expenses/FETCH'
 export const FETCH_SUCCESS = 'expenses/FETCH_SUCCESS'
 export const ADD_COMMENT = 'expenses/ADD_COMMENT'
 export const ADD_RECEIPT = 'expenses/ADD_RECEIPT'
-
 export const UPDATE_EXPENSE = 'expenses/UPDATE_EXPENSE'
 export const TOGGLE_LOADING = 'expenses/TOGGLE_LOADING'
+export const UPLOAD_PROGRESS = 'expenses/UPLOAD_PROGRESS'
 export const ERROR = 'expenses/ERROR'
 
 export const {
@@ -19,6 +19,7 @@ export const {
     addReceipt,
     updateExpense,
     toggleLoading,
+    uploadProgress,
     error
   }
 } = createActions({
@@ -28,19 +29,9 @@ export const {
   [ADD_RECEIPT]: (id, receipt) => ({ id, receipt }),
   [UPDATE_EXPENSE]: undefined,
   [TOGGLE_LOADING]: undefined,
+  [UPLOAD_PROGRESS]: undefined,
   [ERROR]: undefined
 })
-
-const utils = produce((draft, { type, payload }) => {
-  switch(type) {
-    case TOGGLE_LOADING:
-      draft.isLoading = payload
-      return
-
-    default:
-      return draft
-  }
-}, { isLoading: false })
 
 const expensesById = produce((draft, { type, payload}) => {
   switch(type) {
@@ -66,6 +57,21 @@ const allIds = produce((draft, { type, payload}) => {
       return draft
   }
 }, [])
+
+const utils = produce((draft, { type, payload }) => {
+  switch(type) {
+    case TOGGLE_LOADING:
+      draft.isLoading = payload
+      return
+
+    case UPLOAD_PROGRESS:
+      draft.progress = payload
+      return
+
+    default:
+      return draft
+  }
+}, { isLoading: false, progress: 0 })
 
 export default combineReducers({
   expensesById,

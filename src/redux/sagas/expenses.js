@@ -1,7 +1,7 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { take, takeLatest, call, put } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { expensesModule } from '../modules'
-import { fetchExpenses, addCommentToExpense, addReceiptToExpense } from '../api'
+import { fetchExpenses, addCommentToExpense, uploadReceiptChannel } from '../api'
 import history from '../../redux/history'
 
 function* fetch() {
@@ -28,18 +28,33 @@ function* addComment({ payload }) {
   yield put(expensesModule.toggleLoading(false))
 }
 
-function* addReceipt({ payload }) {
+function* addReceipt({payload}) {
   yield put(expensesModule.toggleLoading(true))
 
   try {
-    const response = yield call(addReceiptToExpense, payload.id, payload.receipt)
-    yield put(expensesModule.updateExpense(response.data))
-    yield call(history.push, '/')
+    const uploadChannel = yield call(uploadReceiptChannel, payload.id, payload.receipt)
+
+    while (true) {
+      const {
+        progressEvent,
+        response = {}
+      } = yield take(uploadChannel)
+
+      if(progressEvent && progressEvent.lengthComputable) {
+        yield put(expensesModule.uploadProgress(progressEvent.loaded / progressEvent.total * 100))
+      }
+
+      if(response.status === 200) {
+        yield put(expensesModule.updateExpense(response.data))
+        yield call(history.push, '/')
+      }
+    }
   } catch(err) {
     yield put(expensesModule.error(err))
+  } finally {
+    yield put(expensesModule.uploadProgress(0))
+    yield put(expensesModule.toggleLoading(false))
   }
-
-  yield put(expensesModule.toggleLoading(false))
 }
 
 export default function* expenseSaga() {
