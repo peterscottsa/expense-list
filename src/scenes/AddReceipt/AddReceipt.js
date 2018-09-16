@@ -7,11 +7,12 @@ import {
 } from 'components'
 import { withRouter } from 'react-router'
 import Expenses from 'containers/Expenses'
-import { FileUpload } from 'components'
+import { FileUpload, ProgressBar } from 'components'
+import { ButtonRow } from './styles'
 
 const AddReceipt = ({ match }) => (
   <Expenses>
-    { ({ addReceipt, expenses, isLoading }) => (
+    { ({ addReceipt, expenses, isLoading, uploadProgress }) => (
       <Formik
         initialValues={{
           receipt: '',
@@ -26,24 +27,26 @@ const AddReceipt = ({ match }) => (
           <form onSubmit={handleSubmit}>
             <Subtitle>Add receipt</Subtitle>
             <FormRow>
-              <Field name="receipt_upload"
-                     type="file"
-                     accept="image/*"
-                     fileName={values.receiptName}
-                     onChange={e => {
-                       setFieldValue('receiptName', e.currentTarget.files[0].name)
-                       setFieldValue('receiptBlob', e.currentTarget.files[0])
-                     }}
-                     component={FileUpload} />
+              <Field
+                name="receipt_upload"
+                type="file"
+                accept="image/*"
+                fileName={values.receiptName}
+                onChange={e => {
+                  setFieldValue('receiptName', e.currentTarget.files[0].name)
+                  setFieldValue('receiptBlob', e.currentTarget.files[0])
+                }}
+                component={FileUpload} />
             </FormRow>
 
-            <FormRow>
+            <ButtonRow>
               <Button
                 type="submit"
                 disabled={isLoading || !values.receiptBlob}>
                   { isLoading ? 'Saving...' : 'Save receipt' }
               </Button>
-            </FormRow>
+              <ProgressBar progress={uploadProgress} />
+            </ButtonRow>
           </form>
         )}/>
     )}
