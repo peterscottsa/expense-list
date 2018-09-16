@@ -24,6 +24,7 @@ const ExpenseRow = ({ expense }) =>
     <Cell>{ expense.date }</Cell>
     <Cell>
       <Link to={`/${expense.id}/comment`}>Add comment</Link>
+      <Link to={`/${expense.id}/comment`}>Comment</Link> | <Link to={`/${expense.id}/receipt`}>Receipt</Link>
     </Cell>
   </DataRow>
 
