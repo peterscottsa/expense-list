@@ -1,4 +1,4 @@
-export default {
+const colors = {
   veniceBlue: '#05668D',
   blueLagoon: '#028090',
   persianGreen: '#00A896',
@@ -16,3 +16,11 @@ export default {
   britain: '#001F7E',
   eu: '#FECB00'
 }
+
+export const countryHelper = {
+  'DKK': colors.denmark,
+  'GBP': colors.britain,
+  'EUR': colors.eu,
+}
+
+export default colors

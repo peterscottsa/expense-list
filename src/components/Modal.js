@@ -1,5 +1,5 @@
 import React from 'react'
-import { spacing, colors } from 'common'
+import { spacing } from 'common'
 import styled from 'styled-components'
 import { Close } from 'styled-icons/material/Close'
 import { Route } from 'react-router'

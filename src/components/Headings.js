@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { colors, spacing } from 'common'
 
 const Title = styled.h1`
   font-size: 40px;

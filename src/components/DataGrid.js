@@ -32,7 +32,7 @@ const DataRow = styled.div`
 `
 
 const Cell = styled.div`
-  padding: ${spacing.small}px;
+  padding: ${spacing.medium}px;
   color: #333;
   text-align: ${({ align }) => align};
 `
