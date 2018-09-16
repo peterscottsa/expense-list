@@ -8,7 +8,6 @@ import {
 import { withRouter } from 'react-router'
 import Expenses from 'containers/Expenses'
 import { FileUpload } from 'components'
-import { LastReceipt } from './styles'
 
 const AddReceipt = ({ match }) => (
   <Expenses>
@@ -26,12 +25,6 @@ const AddReceipt = ({ match }) => (
         render={({ values, errors, handleSubmit, setFieldValue }) => (
           <form onSubmit={handleSubmit}>
             <Subtitle>Add receipt</Subtitle>
-
-            { expenses[match.params.id] ?
-              <LastReceipt
-                src={`http://localhost:3000${expenses[match.params.id].lastReceipt}`} alt="" /> : null
-            }
-
             <FormRow>
               <Field name="receipt_upload"
                      type="file"
