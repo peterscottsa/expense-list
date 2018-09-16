@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
+import { countryHelper } from 'common/colors'
 import Expenses from 'containers/Expenses'
-import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title } from 'components'
+import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip } from 'components'
 import { Wrapper } from './styles'
-import { EditExpense } from 'scenes'
+import { AddComment, AddReceipt } from 'scenes'
 import { Link } from 'react-router-dom'
 
 const GridHeader = props =>
@@ -17,13 +18,16 @@ const GridHeader = props =>
 
 const ExpenseRow = ({ expense }) =>
   <DataRow to={`/${expense.id}/comment`}>
-    <Cell>{ expense.amount.currency }</Cell>
+    <Cell>
+      <StatusChip background={countryHelper[expense.amount.currency]}>
+        { expense.amount.currency }
+      </StatusChip>
+    </Cell>
     <Cell>{ expense.amount.value }</Cell>
     <Cell>{ expense.merchant }</Cell>
     <Cell>{ expense.user.first } { expense.user.last }</Cell>
     <Cell>{ expense.date }</Cell>
     <Cell>
-      <Link to={`/${expense.id}/comment`}>Add comment</Link>
       <Link to={`/${expense.id}/comment`}>Comment</Link> | <Link to={`/${expense.id}/receipt`}>Receipt</Link>
     </Cell>
   </DataRow>
@@ -41,8 +45,13 @@ const ExpensesIndex = props => (
             ) }
           </DataGrid>
         </CenteredRow>
+
         <Modal path="/:id/comment" closePath="/">
-          <EditExpense />
+          <AddComment />
+        </Modal>
+
+        <Modal path="/:id/receipt" closePath="/">
+          <AddReceipt />
         </Modal>
       </Wrapper>
     }

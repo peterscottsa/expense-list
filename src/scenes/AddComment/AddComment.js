@@ -9,7 +9,7 @@ const validationSchema = yup.object().shape({
   comment: yup.string().required('You need to fill in a comment.')
 })
 
-const EditExpense = ({ match }) => (
+const AddComment = ({ match }) => (
   <Expenses>
     { ({ addComment, expenses, isLoading }) => (
       <Formik
@@ -17,6 +17,7 @@ const EditExpense = ({ match }) => (
           comment: expenses.hasOwnProperty(match.params.id) ?
             expenses[match.params.id].comment : ''
         }}
+        enableReinitialize
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={validationSchema}
@@ -40,4 +41,4 @@ const EditExpense = ({ match }) => (
   </Expenses>
 )
 
-export default withRouter(EditExpense)
+export default withRouter(AddComment)
