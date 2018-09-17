@@ -32,16 +32,19 @@ export const filteredExpenses = createSelector(
 
 export const paginatedExpenses = createSelector(
   [ filteredExpenses, pagination ],
-  (expenses, { itemsPerPage }) => {
-    return compose(
+  (expenses, { itemsPerPage, currentPage }) => {
+    const paginatedList = compose(
       paginateList(itemsPerPage),
     )(expenses)
+
+    return paginatedList[currentPage -1]
   }
 )
 
 export const paginationState = createSelector(
   [ filteredExpenses, pagination ],
   (expenses, { currentPage, itemsPerPage }) => ({
-    lastPage: currentPage * itemsPerPage >= expenses.length
+    lastPage: currentPage * itemsPerPage >= expenses.length,
+    firstPage: currentPage < 2,
   })
 )

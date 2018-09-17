@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { expensesModule } from '../redux/modules'
 import { paginatedExpenses } from '../redux/selectors/expenses'
+import { dec } from 'ramda'
 
 class Expenses extends Component {
   componentDidMount() {

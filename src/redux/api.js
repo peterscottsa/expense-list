@@ -2,10 +2,9 @@ import axios from 'axios'
 import { buffers, eventChannel, END } from 'redux-saga'
 const baseUrl = 'http://localhost:3000'
 
-
 export const fetchExpenses = async () => await axios.get(`${baseUrl}/expenses`, {
   params: {
-    limit: 5, // Remove this later
+    limit: 500, // Remove this later
     offset: 0
   }
 })

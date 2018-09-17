@@ -2,11 +2,11 @@ import React, { Fragment } from 'react'
 import { countryHelper } from 'common/colors'
 import { adopt } from 'react-adopt'
 import { Expenses, Filters, Pagination } from 'containers'
-import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip, FilterBar } from 'components'
+import { FilterBar } from 'compounds'
+import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip } from 'components'
 import { Wrapper } from './styles'
 import { AddComment, AddReceipt } from 'scenes'
 import { Link } from 'react-router-dom'
-import { dec } from 'ramda'
 
 const ComposedContainer = adopt({
   expensesProps: <Expenses fetchOnMount />,
@@ -52,8 +52,8 @@ const ExpensesIndex = props => (
 
           <DataGrid>
             <GridHeader />
-            { !!expenses.length &&
-              expenses[dec(paginationProps.currentPage)].map( expense =>
+            { !!expenses &&
+              expenses.map( expense =>
                 <ExpenseRow key={expense.id}
                             expense={expense} />
             ) }
