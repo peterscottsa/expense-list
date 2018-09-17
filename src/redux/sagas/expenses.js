@@ -19,6 +19,7 @@ function* addComment({ payload }) {
 
   try {
     const response = yield call(addCommentToExpense, payload.id, payload.comment)
+
     yield put(expensesModule.updateExpense(response.data))
     yield call(history.push, '/')
   } catch(err) {

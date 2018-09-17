@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { createActions } from 'redux-actions'
-import produce from 'immer'
+import { createActions, handleActions } from 'redux-actions'
+import { indexBy, prop } from 'ramda'
+
+const indexById = indexBy(prop('id'))
 
 export const FETCH = 'expenses/FETCH'
 export const FETCH_SUCCESS = 'expenses/FETCH_SUCCESS'
@@ -33,48 +35,28 @@ export const {
   [ERROR]: undefined
 })
 
-const expensesById = produce((draft, { type, payload}) => {
-  switch(type) {
-    case FETCH_SUCCESS:
-      return payload.forEach( expense => draft[expense.id] = expense )
+const expensesById = handleActions({
+  [FETCH_SUCCESS]: (state, { payload }) => indexById(payload),
 
-    case UPDATE_EXPENSE:
-      draft[payload.id] = payload
-      return
-
-    default:
-      return draft
-  }
+  [UPDATE_EXPENSE]: (state, { payload }) => ({
+    ...state,
+    [payload.id]: payload
+  })
 }, {})
 
-const allIds = produce((draft, { type, payload}) => {
-  switch(type) {
-    case FETCH_SUCCESS:
-      payload.forEach( expense => draft.push(expense.id) )
-      return
+const utils = handleActions({
+  [TOGGLE_LOADING]: (state, { payload }) => ({
+    ...state,
+    isLoading: payload
+  }),
 
-    default:
-      return draft
-  }
-}, [])
-
-const utils = produce((draft, { type, payload }) => {
-  switch(type) {
-    case TOGGLE_LOADING:
-      draft.isLoading = payload
-      return
-
-    case UPLOAD_PROGRESS:
-      draft.progress = payload
-      return
-
-    default:
-      return draft
-  }
-}, { isLoading: false, progress: 0 })
+  [UPLOAD_PROGRESS]: (state, { payload }) => ({
+    ...state,
+    progress: payload
+  })
+}, {})
 
 export default combineReducers({
   expensesById,
-  allIds,
   utils
 })

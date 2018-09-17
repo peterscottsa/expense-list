@@ -1,17 +1,47 @@
-import produce from 'immer'
 import { createSelector } from 'reselect'
+import { values, filter, compose, contains, splitEvery, map } from 'ramda'
 import format from 'date-fns/format'
 
-const getExpenses = state => state.expenses.expensesById
+const expensesCollection = state => state.expenses.expensesById
+const pagination = state => state.pagination
+const currencyFilters = state => state.filters['currency']
+const companyFilters = state => state.filters['merchant']
 
-export const computedExpenses = createSelector(
-  getExpenses,
-  produce((draft) =>
-    Object.values(draft).forEach( expense => {
-        draft[expense.id].date = format(expense.date, 'DD MMMM')
-        draft[expense.id].hasComment = expense.comment.length > 0
-        draft[expense.id].lastReceipt = expense.receipts.length ? expense.receipts[0].url : null
-      }
-    )
-  )
+const paginateList = itemsPerPage => list => splitEvery(itemsPerPage, list)
+
+const filterByCurrency = filter => value =>
+  filter.length ? contains(filter, value.amount.currency) : value
+
+const filterByMerchant = filter => value =>
+  filter.length ? contains(filter, value.merchant) : value
+
+const formatFields = expense => ({
+  ...expense,
+  date: format(expense.date, 'DD MMMM')
+})
+
+export const filteredExpenses = createSelector(
+  [ expensesCollection, currencyFilters, companyFilters ],
+  (expenses, selectedCurrency, searchTerm) =>
+    compose(
+      map(formatFields),
+      filter(filterByCurrency(selectedCurrency)),
+      filter(filterByMerchant(searchTerm.toUpperCase()))
+    )(values(expenses))
+)
+
+export const paginatedExpenses = createSelector(
+  [ filteredExpenses, pagination ],
+  (expenses, { itemsPerPage }) => {
+    return compose(
+      paginateList(itemsPerPage),
+    )(expenses)
+  }
+)
+
+export const paginationState = createSelector(
+  [ filteredExpenses, pagination ],
+  (expenses, { currentPage, itemsPerPage }) => ({
+    lastPage: currentPage * itemsPerPage >= expenses.length
+  })
 )
