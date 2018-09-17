@@ -3,11 +3,14 @@ import styled from 'styled-components'
 import { colors } from 'common'
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   position: relative;
   width: 100%;
   height: 8px;
   border-radius: 8px;
   overflow: hidden;
+  
 `
 const Progress = styled.div`
   position: absolute;

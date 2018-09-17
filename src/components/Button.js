@@ -2,9 +2,7 @@ import styled from 'styled-components'
 import { colors, spacing } from 'common'
 import { darken } from 'polished'
 
-const Button = styled.button.attrs({
-  type: "button"
-})`
+const Button = styled.button`
   appearance: none;
   padding: ${spacing.small}px ${spacing.medium}px;
   background: ${ props => props.disabled ?  'rgba(0, 0, 0, 0.5)' : colors.caribbean };
