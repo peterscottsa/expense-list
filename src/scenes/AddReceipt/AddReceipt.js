@@ -12,7 +12,7 @@ import { ButtonRow } from './styles'
 
 const AddReceipt = ({ match }) => (
   <Expenses>
-    { ({ addReceipt, expenses, isLoading, uploadProgress }) => (
+    { ({ addReceipt, isLoading, uploadProgress }) => (
       <Formik
         initialValues={{
           receipt: '',
@@ -33,6 +33,8 @@ const AddReceipt = ({ match }) => (
                 accept="image/*"
                 fileName={values.receiptName}
                 onChange={e => {
+                  if(!e.currentTarget.files.length) return
+
                   setFieldValue('receiptName', e.currentTarget.files[0].name)
                   setFieldValue('receiptBlob', e.currentTarget.files[0])
                 }}

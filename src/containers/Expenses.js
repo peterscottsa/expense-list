@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { expensesModule } from '../redux/modules'
-import { computedExpenses } from '../redux/selectors/expenses'
-
+import { paginatedExpenses } from '../redux/selectors/expenses'
 
 class Expenses extends Component {
   componentDidMount() {
@@ -20,7 +19,8 @@ Expenses.defaultProps = {
 }
 
 const mapStateToProps = state => ({
-  expenses: computedExpenses(state),
+  expensesById: state.expenses.expensesById,
+  expenses: paginatedExpenses(state),
   isLoading: state.expenses.utils.isLoading,
   uploadProgress: state.expenses.utils.progress
 })

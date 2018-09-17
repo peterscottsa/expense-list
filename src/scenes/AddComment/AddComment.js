@@ -11,11 +11,11 @@ const validationSchema = yup.object().shape({
 
 const AddComment = ({ match }) => (
   <Expenses>
-    { ({ addComment, expenses, isLoading }) => (
+    { ({ addComment, expensesById, isLoading }) => (
       <Formik
         initialValues={{
-          comment: expenses.hasOwnProperty(match.params.id) ?
-            expenses[match.params.id].comment : ''
+          comment: expensesById.hasOwnProperty(match.params.id) ?
+            expensesById[match.params.id].comment : ''
         }}
         enableReinitialize
         validateOnBlur={false}

@@ -1,19 +1,27 @@
 import React, { Fragment } from 'react'
 import { countryHelper } from 'common/colors'
-import Expenses from 'containers/Expenses'
-import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip } from 'components'
+import { adopt } from 'react-adopt'
+import { Expenses, Filters, Pagination } from 'containers'
+import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip, FilterBar } from 'components'
 import { Wrapper } from './styles'
 import { AddComment, AddReceipt } from 'scenes'
 import { Link } from 'react-router-dom'
+import { dec } from 'ramda'
 
-const GridHeader = props =>
+const ComposedContainer = adopt({
+  expensesProps: <Expenses fetchOnMount />,
+  filtersProps: <Filters />,
+  paginationProps: <Pagination />
+})
+
+const GridHeader = () =>
   <Fragment>
     <HeaderCell>Currency</HeaderCell>
     <HeaderCell>Amount</HeaderCell>
     <HeaderCell>Merchant</HeaderCell>
     <HeaderCell>User name</HeaderCell>
     <HeaderCell>Date</HeaderCell>
-    <HeaderCell></HeaderCell>
+    <HeaderCell />
   </Fragment>
 
 const ExpenseRow = ({ expense }) =>
@@ -33,15 +41,21 @@ const ExpenseRow = ({ expense }) =>
   </DataRow>
 
 const ExpensesIndex = props => (
-  <Expenses fetchOnMount>
-    { ({ expenses }) =>
+  <ComposedContainer>
+    { ({ expensesProps: { expenses, listCount }, filtersProps, paginationProps }) =>
       <Wrapper>
         <CenteredRow>
           <Title>Expenses list</Title>
+          <FilterBar
+            {...filtersProps}
+            {...paginationProps} />
+
           <DataGrid>
             <GridHeader />
-            { Object.values(expenses).map( expense =>
-              <ExpenseRow key={expense.id} expense={expense} />
+            { !!expenses.length &&
+              expenses[dec(paginationProps.currentPage)].map( expense =>
+                <ExpenseRow key={expense.id}
+                            expense={expense} />
             ) }
           </DataGrid>
         </CenteredRow>
@@ -55,7 +69,7 @@ const ExpensesIndex = props => (
         </Modal>
       </Wrapper>
     }
-  </Expenses>
+  </ComposedContainer >
 )
 
 export default ExpensesIndex
