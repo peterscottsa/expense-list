@@ -6,7 +6,7 @@ const colors = {
   tusk: '#F0F3BD',
   persimmon: '#FF5A5F',
 
-  // Geys
+  // Greys
   alabaster: '#F8F8F8',
   athens: '#f1f1f2',
   abbey: '#4E5155',

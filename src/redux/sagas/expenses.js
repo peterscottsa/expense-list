@@ -15,7 +15,6 @@ function* fetch() {
 
 function* addComment({ payload }) {
   yield put(expensesModule.toggleLoading(true))
-  yield delay(1000)
 
   try {
     const response = yield call(addCommentToExpense, payload.id, payload.comment)
