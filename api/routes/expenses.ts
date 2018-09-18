@@ -74,7 +74,7 @@ router.post('/:id/receipts', (req, res) => {
     const receipt = req.files.receipt as UploadedFile
     const receiptFileExtension = receipt.name.split('.').pop()
     const receiptId = `${id}-${expense.receipts.length}`
-    receipt.mv(`${process.cwd()}/receipts/${receiptId}.${receiptFileExtension}`, (err) => {
+    receipt.mv(`${process.cwd()}/api/receipts/${receiptId}.${receiptFileExtension}`, (err) => {
       if (err) {
         return res.status(500).send(err);
       }
