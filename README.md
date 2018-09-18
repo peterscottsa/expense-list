@@ -1,6 +1,7 @@
 ## Getting started 
 - Run `yarn install`
 - Run `yarn run start` to start the client and server.
+Not really an ideal setup but if you struggle, open the project in different tabs in terminal and run `yarn run start:client` `yarn run start:server` separately.
 
 ## Motivation for choices 🧐
 Generally, readability and composition where driving factors when deciding how to build this app. Good examples of this can be found 
