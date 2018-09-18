@@ -1,5 +1,3 @@
-# Pleo challenge 
-
 ## Getting started 
 - Run `yarn install`
 - Run `yarn run start` to start the client and server.
