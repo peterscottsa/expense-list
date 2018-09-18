@@ -2,10 +2,9 @@ import React, { Fragment } from 'react'
 import { countryHelper } from 'common/colors'
 import { adopt } from 'react-adopt'
 import { Expenses, Filters, Pagination } from 'containers'
-import { FilterBar } from 'compounds'
+import { FilterBar, AddComment, AddReceipt } from 'compounds'
 import { DataGrid, HeaderCell, Cell, CenteredRow, DataRow, Modal, Title, StatusChip } from 'components'
 import { Wrapper } from './styles'
-import { AddComment, AddReceipt } from 'scenes'
 import { Link } from 'react-router-dom'
 
 const ComposedContainer = adopt({
@@ -42,7 +41,11 @@ const ExpenseRow = ({ expense }) =>
 
 const ExpensesIndex = props => (
   <ComposedContainer>
-    { ({ expensesProps: { expenses, listCount }, filtersProps, paginationProps }) =>
+    { ({
+         expensesProps: { expenses, listCount, ...expensesProps },
+         filtersProps,
+         paginationProps
+    }) =>
       <Wrapper>
         <CenteredRow>
           <Title>Expenses list</Title>
@@ -61,11 +64,17 @@ const ExpensesIndex = props => (
         </CenteredRow>
 
         <Modal path="/:id/comment" closePath="/">
-          <AddComment />
+          <AddComment
+            addComment={expensesProps.addComment}
+            expensesById={expensesProps.expensesById}
+            isLoading={expensesProps.isLoading} />
         </Modal>
 
         <Modal path="/:id/receipt" closePath="/">
-          <AddReceipt />
+          <AddReceipt
+            addReceipt={expensesProps.addReceipt}
+            isLoading={expensesProps.isLoading}
+            uploadProgress={expensesProps.uploadProgress} />
         </Modal>
       </Wrapper>
     }

@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors, spacing } from 'common'
 
-
-const Input = styled.input`
+const TextInput = styled.input`
   font-size: 14px;
   width: 100%;
   appearance: none;
@@ -23,7 +22,5 @@ const Input = styled.input`
     color: rgba(0, 0, 0, 0.2);
   }
 `
-
-const TextInput = props => <Input { ...props } />
 
 export default TextInput
