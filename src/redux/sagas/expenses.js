@@ -1,5 +1,4 @@
 import { take, takeLatest, call, put } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import { expensesModule } from '../modules'
 import { fetchExpenses, addCommentToExpense, uploadReceiptChannel } from '../api'
 import history from '../../redux/history'

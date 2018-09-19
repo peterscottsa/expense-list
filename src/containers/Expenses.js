@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react' // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux'
 import { expensesModule } from '../redux/modules'
 import { paginatedExpenses } from '../redux/selectors/expenses'
